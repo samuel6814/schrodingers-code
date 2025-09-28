@@ -3,281 +3,238 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import Navbar from './Navbar';
-import { ArrowRight } from 'lucide-react'; // Using ArrowRight for the button
 
-// --- Animations ---
+// --- KEYFRAME ANIMATIONS ---
+
+// 1. ADDED: A new keyframe for the pulsing "Available" dot
+const pulse = keyframes`
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(52, 211, 153, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+  }
+`;
+
 const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 
-const rotateNote = keyframes`
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(-1deg); }
-  75% { transform: rotate(1deg); }
-  100% { transform: rotate(0deg); }
-`;
+// --- STYLED COMPONENTS ---
 
-// --- Styled Components ---
-const HeroSection = styled.div`
-  height: 100vh;
+const HeroSectionContainer = styled.div`
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start; /* Align content to the top initially */
-  background-color: ${({ theme }) => theme.body};
-  padding: 20px;
-  box-sizing: border-box;
+  background-color: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
   overflow: hidden;
-  position: relative;
-`;
-
-const ContentWrapper = styled.div`
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 1200px;
-  padding-top: 100px; /* Space for the fixed Navbar and top padding */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding-top: 8rem;
 `;
 
 const TopSection = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1.5fr; /* Adjust column width as per design */
-  gap: 40px;
-  width: 100%;
-  margin-bottom: 80px; /* Space between top text and sticky notes */
-
-  @media (max-width: 992px) {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 20px;
-  }
-`;
-
-const LeftBlock = styled.div`
-  text-align: left;
-  animation: ${fadeIn} 0.8s ease-out forwards;
-  opacity: 0;
-
-  @media (max-width: 992px) {
-    text-align: center;
-  }
-`;
-
-const Headline = styled.h1`
-  font-family: 'Inter', sans-serif;
-  font-size: 4.5rem; 
-  font-weight: 800;
-  color: ${({ theme }) => theme.text};
-  line-height: 1.1;
-  margin-bottom: 0.5rem;
-
-  @media (max-width: 1200px) {
-    font-size: 3.8rem;
-  }
-  @media (max-width: 992px) {
-    font-size: 3rem;
-  }
-  @media (max-width: 576px) {
-    font-size: 2.2rem;
-  }
-`;
-
-const RightBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Align text to the left */
-  animation: ${fadeIn} 0.8s ease-out 0.3s forwards;
-  opacity: 0;
-
-  @media (max-width: 992px) {
-    align-items: center; /* Center on mobile */
-  }
-`;
-
-const Description = styled.p`
-  font-size: 1.1rem;
-  color: ${({ theme }) => theme.text};
-  opacity: 0.7;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  text-align: left; /* Ensure description is left-aligned */
-
-  @media (max-width: 992px) {
-    text-align: center;
-    max-width: 80%;
-  }
-`;
-
-const CtaButton = styled.a`
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background-color: #000; /* Black button as per design */
-  color: #fff;
-  padding: 14px 28px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-`;
-
-const StickyNotesContainer = styled.div`
   display: flex;
   justify-content: center;
-  flex-wrap: wrap; /* Allow notes to wrap on smaller screens */
-  gap: 30px;
-  width: 100%;
-  max-width: 1000px;
-  padding-bottom: 40px; /* Space from bottom of screen */
+  align-items: center;
+  padding: 4rem 2rem 2rem 2rem;
 `;
 
-const StickyNote = styled.div`
+const MassiveText = styled.h1`
+  font-family: 'Anton', sans-serif;
+  font-size: 15vw;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: #fff;
+  text-transform: uppercase;
   position: relative;
-  width: 280px; /* Width of the sticky note */
-  height: 320px; /* Height of the sticky note */
-  border-radius: 12px;
-  padding: 30px;
+  margin: 0;
+`;
+
+const ColorAccent = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 38%;
+  transform: translateY(-50%);
+  width: 2.5vw;
+  height: 2.5vw;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #5d58e8 -12.42deg,
+    #b273f6 119.58deg,
+    #53c6f0 223.2deg,
+    #5d58e8 347.58deg
+  );
+`;
+
+const Divider = styled.div`
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  transform: rotate(${props => props.rotate || '0deg'});
-  animation: ${rotateNote} 4s ease-in-out infinite;
-  animation-delay: ${props => props.delay || '0s'};
-  background-color: ${props => props.color};
-  color: white; /* Text color for the notes */
-  box-sizing: border-box;
-  
-  /* Representing the "tapes" */
-  &::before, &::after {
-    content: '';
-    position: absolute;
-    height: 12px;
-    width: 60px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 2px;
-    top: -6px;
-    transform: rotate(5deg);
-  }
-  &::before { left: 20px; }
-  &::after { right: 20px; transform: rotate(-8deg); }
+  align-items: center;
+  border-top: 1px solid #333;
+  padding-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+`;
 
-  &:nth-child(2)::before { left: 40px; transform: rotate(-3deg); }
-  &:nth-child(2)::after { right: 40px; transform: rotate(10deg); }
-  
-  &:nth-child(3)::before { left: 10px; transform: rotate(8deg); }
-  &:nth-child(3)::after { right: 10px; transform: rotate(-5deg); }
-
+const BottomSection = styled.div`
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  align-items: start;
 
   @media (max-width: 768px) {
-    width: 250px;
-    height: 280px;
-    padding: 20px;
+    grid-template-columns: 1fr;
   }
 `;
 
-const NoteHeader = styled.div`
+const Headline = styled.h2`
+  font-size: 3.5rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+`;
+
+// --- WIDGET STYLES START HERE ---
+
+const BookingWidget = styled.div`
+  background-color: #111;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    border-color: #555;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const WidgetHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 20px;
+  align-items: center;
+  margin-bottom: 1rem;
 `;
 
-const NoteProgress = styled.span`
-  font-size: 2.5rem;
-  font-weight: 800;
-  opacity: 0.3;
-`;
-
-const NoteStatus = styled.span`
-  font-size: 1.1rem;
-  font-weight: 600;
-`;
-
-const NoteTitle = styled.h3`
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-top: auto; /* Pushes title to bottom */
-`;
-
-// Placeholder for the abstract SVG-like drawings inside notes
-const NoteIllustration = styled.div`
-  flex-grow: 1; /* Allows it to take available space */
+const Status = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* Simple placeholder for complex SVG, you can replace with actual SVG later */
-  background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-  border-radius: 50%;
-  width: 80%;
-  height: 80%;
-  margin: 0 auto;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
 `;
 
+const PulsingDot = styled.div`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #34d399;
+  animation: ${pulse} 2s infinite;
+`;
 
-// --- Component ---
+const Time = styled.span`
+  color: #888;
+  font-size: 0.9rem;
+`;
+
+const WidgetTitle = styled.h3`
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+`;
+
+const WidgetText = styled.p`
+  color: #888;
+  margin: 0;
+  line-height: 1.6;
+  font-size: 0.9rem;
+`;
+
+const BookButton = styled.a`
+  display: block;
+  width: 90%;
+  padding: 0.8rem;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 1.5rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: transparent;
+    color: #fff;
+  }
+`;
+
+// --- WIDGET STYLES END HERE ---
+
 const Hero = () => {
   return (
-    <HeroSection>
+    <HeroSectionContainer>
       <Navbar />
+      <TopSection>
+        <MassiveText>
+          Quai<ColorAccent />graine
+        </MassiveText>
+      </TopSection>
+
+      <Divider>
+        <span>What I Do</span>
+        <span>Let's Talk</span>
+      </Divider>
       
-      <ContentWrapper>
-        <TopSection>
-          <LeftBlock>
-            <Headline>Your Digital Workflow, Made Efficient.</Headline>
-          </LeftBlock>
-          <RightBlock>
-            <Description>
-              As a Full-Stack Developer, I centralize your web development, SEO, data analysis, and database management processes to deliver seamless, effective, and data-driven solutions.
-            </Description>
-            <CtaButton href="#services">
-              Get started <ArrowRight size={18} />
-            </CtaButton>
-          </RightBlock>
-        </TopSection>
+      <BottomSection>
+        <Headline>
+          A design-focused developer taking brands in Accra from zero to one and beyond.
+        </Headline>
 
-        <StickyNotesContainer>
-          <StickyNote color="#A855F7" rotate="-3deg" delay="0s">
-            <NoteHeader>
-              <NoteStatus>Research</NoteStatus>
-              <NoteProgress>1</NoteProgress>
-            </NoteHeader>
-            <NoteIllustration />
-            <NoteTitle>Web Development</NoteTitle>
-          </StickyNote>
-
-          <StickyNote color="#FFC107" rotate="2deg" delay="0.5s"> {/* Changed from orange to yellow for contrast */}
-            <NoteHeader>
-              <NoteStatus>Working on it</NoteStatus>
-              <NoteProgress>2</NoteProgress>
-            </NoteHeader>
-            <NoteIllustration />
-            <NoteTitle>SEO & Analytics</NoteTitle>
-          </StickyNote>
-
-          <StickyNote color="#F5651D" rotate="-5deg" delay="1s">
-            <NoteHeader>
-              <NoteStatus>Completed</NoteStatus>
-              <NoteProgress>3</NoteProgress>
-            </NoteHeader>
-            <NoteIllustration />
-            <NoteTitle>Database & Systems</NoteTitle>
-          </StickyNote>
-        </StickyNotesContainer>
-      </ContentWrapper>
-    </HeroSection>
+        <BookingWidget>
+          <WidgetHeader>
+            <Status>
+              <PulsingDot />
+              Available
+            </Status>
+            <Time>15 mins</Time>
+          </WidgetHeader>
+          <WidgetTitle>Book an intro call</WidgetTitle>
+          <WidgetText>
+            We'll talk through your project and how we can work together to make it happen.
+          </WidgetText>
+          <BookButton href="#contact">Book a call →</BookButton>
+        </BookingWidget>
+      </BottomSection>
+    </HeroSectionContainer>
   );
 };
 

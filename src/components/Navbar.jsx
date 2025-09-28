@@ -1,94 +1,99 @@
+// src/components/Navbar.jsx
+
 import React from 'react';
 import styled from 'styled-components';
-import { Briefcase } from 'lucide-react';
+import { Mail } from 'lucide-react'; // Using a 'Mail' icon for Contact
 
-const NavWrapper = styled.header`
-  position: fixed;
-  top: 20px;
+const NavContainer = styled.nav`
+  position: fixed; /* Sits on top of the content */
+  top: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
-  width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
+  width: 95%;
+  max-width: 900px; /* Max width to keep it elegant */
+  padding: 0.75rem 1.5rem;
+  
   display: flex;
-  justify-content: center;
-`;
-
-const NavPill = styled.nav`
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
-  padding: 10px 15px;
-  /* UPDATED: Now using theme variables */
-  background: ${({ theme }) => theme.navBackground};
-  border: 1px solid ${({ theme }) => theme.navBorder};
-  border-radius: 999px;
-  box-shadow: ${({ theme }) => theme.navShadow};
+
+  background-color: rgba(17, 17, 17, 0.5); /* Semi-transparent black */
+  border: 1px solid #333;
+  border-radius: 999px; /* This creates the pill shape */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 100;
+
+  @media (max-width: 768px) {
+    top: 1rem;
+    width: 90%;
+  }
 `;
 
 const Logo = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  /* UPDATED: Now using theme variables */
-  background-color: ${({ theme }) => theme.logoBg};
-  color: ${({ theme }) => theme.logoText};
-  border-radius: 50%;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff;
   text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: scale(1.05);
-  }
 `;
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 2rem;
 
   @media (max-width: 768px) {
-    display: none;
+    display: none; /* Hide text links on mobile */
   }
 `;
 
 const StyledLink = styled.a`
+  font-family: 'Inter', sans-serif;
   text-decoration: none;
-  /* UPDATED: Now using theme variables */
-  color: ${({ theme, active }) => (active ? theme.text : theme.textSecondary)};
-  font-weight: ${({ active }) => (active ? '600' : '500')};
-  font-size: 1rem;
-  padding: 8px 16px;
-  border-radius: 999px;
-  transition: all 0.2s ease-in-out;
-  background-color: ${({ active, theme }) => (active ? theme.linkHoverBg : 'transparent')};
+  color: #e7e7e7;
+  font-weight: 500;
+  transition: color 0.3s ease;
 
   &:hover {
-    background-color: ${({ theme }) => theme.linkHoverBg};
-    color: ${({ theme }) => theme.text};
+    color: #fff;
   }
+`;
+
+const CtaButton = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #333;
+  border-radius: 50%;
 `;
 
 const Navbar = () => {
   return (
-    <NavWrapper>
-      <NavPill>
-        <Logo href="#">
-          <Briefcase size={20} />
-        </Logo>
-        <NavLinks>
-          <StyledLink href="#" active>Works</StyledLink>
-          <StyledLink href="#">Benefits</StyledLink>
-          <StyledLink href="#">About</StyledLink>
-          <StyledLink href="#">Process</StyledLink>
-          <StyledLink href="#">Pricing</StyledLink>
-          <StyledLink href="#">FAQ</StyledLink>
-        </NavLinks>
-      </NavPill>
-    </NavWrapper>
+    <NavContainer>
+      <Logo href="#">QG</Logo>
+      <NavLinks>
+        <StyledLink href="#services">Services</StyledLink>
+        <StyledLink href="#projects">Projects</StyledLink>
+        <StyledLink href="#about">About</StyledLink>
+      </NavLinks>
+      <CtaButton href="#contact">
+        CONTACT
+        <IconWrapper>
+          <Mail size={16} />
+        </IconWrapper>
+      </CtaButton>
+    </NavContainer>
   );
 };
 

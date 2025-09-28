@@ -1,39 +1,46 @@
-// src/theme.js
+// src/theme.jsx
 
-export const lightTheme = {
-    // Existing Colors
-    body: '#FFFFFF',
-    text: '#212529',
-    accentOrange: '#F5651D',
-    accentGreen: '#1E8449',
-    buttonPrimaryBg: '#212529',
-    buttonPrimaryText: '#FFFFFF',
-    
-    // NEW Colors for the Navbar
-    navBackground: '#FFFFFF',
-    navBorder: 'rgba(0, 0, 0, 0.05)',
-    navShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
-    logoBg: '#000000',
-    logoText: '#FFFFFF',
-    textSecondary: 'rgba(0, 0, 0, 0.6)',
-    linkHoverBg: 'rgba(0, 0, 0, 0.05)',
+// --- DARK THEME ---
+export const darkTheme = {
+  // Core Colors
+  body: '#010409', // A deep, near-black charcoal (like GitHub's dark mode)
+  text: '#E6EDF3', // A soft white for high readability
+  textSecondary: '#8B949E', // A medium grey for subtitles and less important text
+  accent: '#58A6FF', // A vibrant, modern blue for interactive elements
+
+  // Backgrounds
+  navBg: 'rgba(1, 4, 9, 0.8)', // Semi-transparent to hint at content scrolling underneath
+  cardBg: '#0D1117', // A slightly lighter charcoal for cards to stand out
+  
+  // Borders
+  navBorder: 'rgba(255, 255, 255, 0.1)',
+  cardBorder: 'rgba(255, 255, 255, 0.15)',
+
+  // Buttons & Links
+  buttonPrimaryBg: '#58A6FF',
+  buttonPrimaryText: '#010409',
+  linkHover: '#58A6FF',
 };
 
-export const darkTheme = {
-    // Existing Colors
-    body: '#121212',
-    text: '#E0E0E0',
-    accentOrange: '#F5651D',
-    accentGreen: '#2ECC71',
-    buttonPrimaryBg: '#F5651D',
-    buttonPrimaryText: '#212529',
 
-    // NEW Colors for the Navbar (Dark Mode Version)
-    navBackground: '#1A1A1A',
-    navBorder: 'rgba(255, 255, 255, 0.1)',
-    navShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
-    logoBg: '#FFFFFF',
-    logoText: '#000000',
-    textSecondary: 'rgba(255, 255, 255, 0.6)',
-    linkHoverBg: 'rgba(255, 255, 255, 0.08)',
+// --- LIGHT THEME ---
+export const lightTheme = {
+  // Core Colors
+  body: '#FFFFFF', // Clean white
+  text: '#1F2328', // A dark charcoal, not pure black, for better readability
+  textSecondary: '#656D76', // A softer grey for subtitles
+  accent: '#0969DA', // A slightly deeper blue for better contrast on a light background
+
+  // Backgrounds
+  navBg: 'rgba(255, 255, 255, 0.8)',
+  cardBg: '#F6F8FA', // A very light grey to distinguish cards from the white background
+  
+  // Borders
+  navBorder: 'rgba(0, 0, 0, 0.1)',
+  cardBorder: 'rgba(0, 0, 0, 0.15)',
+
+  // Buttons & Links
+  buttonPrimaryBg: '#0969DA',
+  buttonPrimaryText: '#FFFFFF',
+  linkHover: '#0969DA',
 };
