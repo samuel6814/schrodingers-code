@@ -1,17 +1,26 @@
 // src/components/Projects.jsx
 
 import React from 'react';
-import styled from 'styled-components';
+// 1. Import 'createGlobalStyle'
+import styled, { createGlobalStyle } from 'styled-components';
+import Navbar from './Navbar';
+
+// 2. Define the GlobalStyle component here
+const GlobalStyle = createGlobalStyle`
+  body, html {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 // --- STYLED COMPONENTS ---
 
 const ProjectsSectionContainer = styled.section`
-  width: 100%;
   padding: 6rem 2rem;
   background-color: #000;
   color: #fff;
   font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
 `;
 
 const ContentWrapper = styled.div`
@@ -21,7 +30,6 @@ const ContentWrapper = styled.div`
 
 const SectionTitle = styled.h2`
   font-family: 'Anton', sans-serif;
-  /* FIX: Adjusted font size to prevent overflow */
   font-size: clamp(3.5rem, 10vw, 8rem);
   line-height: 1;
   letter-spacing: -0.04em;
@@ -29,7 +37,7 @@ const SectionTitle = styled.h2`
   text-align: center;
   margin-bottom: 1rem;
 `;
-// ... (the rest of the file is the same)
+
 const SectionSubtitle = styled.p`
   text-align: center;
   font-size: 1.1rem;
@@ -107,38 +115,43 @@ const ViewCaseStudyButton = styled.a`
 
 const Projects = () => {
   return (
-    <ProjectsSectionContainer id="projects">
-      <ContentWrapper>
-        <SectionTitle>Case Studies</SectionTitle>
-        <SectionSubtitle>
-          A selection of projects where I transformed complex challenges into elegant, high-performance digital solutions.
-        </SectionSubtitle>
-        <ProjectList>
-          {/* --- PROJECT 1 --- */}
-          <ProjectItem>
-            <ProjectInfo>
-              <ProjectTitle>Accra Eats</ProjectTitle>
-              <ProjectTags>Web Development / E-commerce</ProjectTags>
-            </ProjectInfo>
-            <ProjectDescription>
-              A local bakery had no online presence and was losing customers. I built a fast, mobile-first website with an online ordering system, resulting in a 20% revenue increase from online orders.
-            </ProjectDescription>
-            <ViewCaseStudyButton href="#">View Case Study</ViewCaseStudyButton>
-          </ProjectItem>
-          {/* --- PROJECT 2 --- */}
-          <ProjectItem>
-            <ProjectInfo>
-              <ProjectTitle>Data Insights Inc.</ProjectTitle>
-              <ProjectTags>Data Analytics / SEO</ProjectTags>
-            </ProjectInfo>
-            <ProjectDescription>
-              A tech startup was struggling with poor search rankings. I performed a full SEO audit and implemented a data-driven content strategy, leading them to rank #1 on Google for their target keywords.
-            </ProjectDescription>
-            <ViewCaseStudyButton href="#">View Case Study</ViewCaseStudyButton>
-          </ProjectItem>
-        </ProjectList>
-      </ContentWrapper>
-    </ProjectsSectionContainer>
+    // 3. Add the GlobalStyle component here to apply the styles
+    <>
+      <GlobalStyle />
+      <ProjectsSectionContainer id="projects">
+        <Navbar/>
+        <ContentWrapper>
+          <SectionTitle>Case Studies</SectionTitle>
+          <SectionSubtitle>
+            A selection of projects where I transformed complex challenges into elegant, high-performance digital solutions.
+          </SectionSubtitle>
+          <ProjectList>
+            {/* --- PROJECT 1 --- */}
+            <ProjectItem>
+              <ProjectInfo>
+                <ProjectTitle>Accra Eats</ProjectTitle>
+                <ProjectTags>Web Development / E-commerce</ProjectTags>
+              </ProjectInfo>
+              <ProjectDescription>
+                A local bakery had no online presence and was losing customers. I built a fast, mobile-first website with an online ordering system, resulting in a 20% revenue increase from online orders.
+              </ProjectDescription>
+              <ViewCaseStudyButton href="#">View Case Study</ViewCaseStudyButton>
+            </ProjectItem>
+            {/* --- PROJECT 2 --- */}
+            <ProjectItem>
+              <ProjectInfo>
+                <ProjectTitle>Data Insights Inc.</ProjectTitle>
+                <ProjectTags>Data Analytics / SEO</ProjectTags>
+              </ProjectInfo>
+              <ProjectDescription>
+                A tech startup was struggling with poor search rankings. I performed a full SEO audit and implemented a data-driven content strategy, leading them to rank #1 on Google for their target keywords.
+              </ProjectDescription>
+              <ViewCaseStudyButton href="#">View Case Study</ViewCaseStudyButton>
+            </ProjectItem>
+          </ProjectList>
+        </ContentWrapper>
+      </ProjectsSectionContainer>
+    </>
   );
 };
 
